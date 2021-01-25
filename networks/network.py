@@ -19,3 +19,4 @@ class Network(ABC):
     def get_adj_lst(self):
         pass
 
+
