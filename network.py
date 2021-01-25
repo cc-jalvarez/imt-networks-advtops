@@ -11,10 +11,11 @@ class Network(ABC):
     def _complete_info(self):
         pass
 
-    # @abstractmethod
-    # def get_adjacency_matrix(self):
-    #     pass
-    #
-    # @abstractmethod
-    # def get_adjacency_list(self):
-    #     pass
+    @abstractmethod
+    def get_adj_mtr(self):
+        pass
+
+    @abstractmethod
+    def get_adj_lst(self):
+        pass
+
