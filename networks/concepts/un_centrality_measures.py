@@ -1,5 +1,5 @@
-from networks.undirected_network import UndirectedNetwork
 from typing import Dict, List, Tuple
+from networks.undirected_network import UndirectedNetwork
 
 
 def calc_centrality_degrees(network: UndirectedNetwork) -> Dict[str, float]:
@@ -69,9 +69,6 @@ def calc_centrality_betweenness(network: UndirectedNetwork) -> Dict[str, float]:
                     if node_b in s_path[0]:
                         n_b_btw_i_j += 1
 
-                # print('num. of shortest paths from {} to {}: {}'.format(node_i, node_j, n_shortest_paths_i_j))
-                # print('num. of times {} belongs to one of these paths: {}'.format(node_b, n_b_btw_i_j))
-
                 btw_i_j.append(n_b_btw_i_j / n_shortest_paths_i_j)
 
         cent_btw[node_b] = sum(btw_i_j)
@@ -129,4 +126,6 @@ def find_shortest_path(all_paths, start: str, goal: str, adj_mat_weighted=None) 
 
     return shortest_paths
 
-
+#
+# EOF
+#

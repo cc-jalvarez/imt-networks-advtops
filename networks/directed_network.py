@@ -1,5 +1,5 @@
-from networks.network import Network
 from typing import List, Tuple, Dict
+from networks.network import Network
 
 
 class DirectedNetwork(Network):

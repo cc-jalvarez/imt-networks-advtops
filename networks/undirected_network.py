@@ -1,5 +1,6 @@
-from networks.network import Network
 from typing import List, Tuple, Dict
+from networks.network import Network
+from networks.concepts import un_centrality_measures as cm
 
 
 class UndirectedNetwork(Network):
@@ -84,8 +85,18 @@ class UndirectedNetwork(Network):
 
         return self.k
 
+    def calc_centrality(self, measure: str) -> Dict[str, float]:
 
-# todo: add function to call centrality measures
+        __measures__ = {'degrees': cm.calc_centrality_degrees,
+                        'closeness': cm.calc_centrality_closeness,
+                        'betweenness': cm.calc_centrality_betweenness}
+
+        if measure.lower() not in __measures__.keys():
+            raise NameError('{} is not a recognized centrality measure'.format(measure))
+
+        cent_for_m = __measures__[measure](self)
+
+        return cent_for_m
 
 
 if __name__ == '__main__':
@@ -102,3 +113,8 @@ if __name__ == '__main__':
 
     ks = test.calc_k(rank=True)
     print(ks)
+
+    center_eg = test.calc_centrality('closeness')
+    print(center_eg)
+
+
