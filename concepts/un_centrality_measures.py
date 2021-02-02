@@ -45,6 +45,37 @@ def calc_centrality_betweenness(network: UndirectedNetwork) -> Dict[str, float]:
 
     cent_btw = {}
 
+    for node_b in network.nodes:
+
+        for node_i in [n for n in network.nodes if n != node_b]:
+
+            btw_i_j = []
+
+            for node_j in [n for n in network.nodes if n != node_b and n != node_i]:
+
+                # find all paths from i to j
+                a_paths = find_all_paths(adj_lst=network.adj_lst, start=node_i, goal=node_j)
+
+                # find shortest path and distance from i to j
+                s_paths = find_shortest_path(all_paths=a_paths, start=node_i, goal=node_j)
+
+                # number of short paths from i to j
+                n_shortest_paths_i_j = len(s_paths)
+
+                # number of times node_b is in those paths
+                n_b_btw_i_j = 0
+
+                for s_path in s_paths:
+                    if node_b in s_path[0]:
+                        n_b_btw_i_j += 1
+
+                # print('num. of shortest paths from {} to {}: {}'.format(node_i, node_j, n_shortest_paths_i_j))
+                # print('num. of times {} belongs to one of these paths: {}'.format(node_b, n_b_btw_i_j))
+
+                btw_i_j.append(n_b_btw_i_j / n_shortest_paths_i_j)
+
+        cent_btw[node_b] = sum(btw_i_j)
+
     return cent_btw
 
 
@@ -54,7 +85,6 @@ def calc_centrality_betweenness(network: UndirectedNetwork) -> Dict[str, float]:
 def find_all_paths(adj_lst: dict, start: str, goal: str) -> List[List[str]]:
     
     all_paths = []
-
     explored = []
     queue = [[start]]  # set queue as a list of lists
 
