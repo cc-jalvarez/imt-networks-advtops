@@ -12,6 +12,7 @@ class UndirectedNetwork(Network):
 
         self.adj_mtr = None
         self.adj_lst = None
+        self.k = None
 
     def _complete_info(self):
         # edges -> nodes, while (when fully connected) nodes
@@ -66,21 +67,38 @@ class UndirectedNetwork(Network):
 
         return self.adj_lst
 
-# todo: add calc_k (here or in concepts folder)
-# todo: add function to call centrality measures
+    def calc_k(self, rank: bool = False) -> Dict[str, int]:
 
+        self.k = dict()
+
+        if self.adj_mtr is None:
+            self.get_adj_mtr()
+
+        for i in range(len(self.nodes)):
+            self.k[self.nodes[i]] = sum(self.adj_mtr[i])
+
+        if rank:
+            k_temp = sorted(self.k.items(), key=lambda x: x[1], reverse=True)
+            self.k = dict(k_temp)  # no idea why it complains here
+            del k_temp
+
+        return self.k
+
+
+# todo: add function to call centrality measures
 
 
 if __name__ == '__main__':
 
     chicago96 = ['Jordan', 'Rodman', 'Pippen', 'Kerr', 'Kukoc']
     test = UndirectedNetwork(nodes=chicago96)
-    print(test.nodes)
-    print(test.edges)
+    # print(test.nodes)
+    # print(test.edges)
 
     mtr = test.get_adj_mtr()
-    print(mtr)
+    # print(mtr)
     lst = test.get_adj_lst()
-    print(lst)
+    # print(lst)
 
-
+    ks = test.calc_k(rank=True)
+    print(ks)

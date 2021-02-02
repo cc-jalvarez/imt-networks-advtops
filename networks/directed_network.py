@@ -12,6 +12,8 @@ class DirectedNetwork(Network):
 
         self.adj_mtr = None
         self.adj_lst = None
+        self.k_i = None
+        self.k_o = None
 
     def _complete_info(self):
         # we always need the edge list
@@ -60,6 +62,15 @@ class DirectedNetwork(Network):
                 self.adj_lst[i0].append(i1)
 
         return self.adj_lst
+
+    def calc_k_i(self, rank: bool = False) -> Dict[str, int]:
+        self.k_i = dict()
+        return self.k_i
+
+    def calc_k_o(self, rank: bool = False) -> Dict[str, int]:
+        self.k_o = dict()
+        return self.k_o
+
 
 # todo: add calc_k_i and calc_k_o (here or in concepts folder)
 
